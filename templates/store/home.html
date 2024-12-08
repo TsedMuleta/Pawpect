@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawpect - Home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}">
+</head>
+<div class="container">
+    <header>
+        <nav class="nav-bar">
+            <span class="welcome-message"><a href="{% url 'store:home' %}">Home</a> {% if user.is_authenticated %}
+                <a href="{% url 'store:store' %}">Store</a>
+                {% endif %}</span>
+
+
+            {% if user.is_authenticated %}
+            <span class="welcome-message">Welcome, <strong>{{ user.username }}</strong>! <a
+                    href="{% url 'store:logout' %}">Logout</a></span>
+            {% else %}
+            <span class="welcome-message"> <a href="{% url 'store:login' %}">Login</a>
+                <a href="{% url 'store:signup' %}">Signup</a></span>
+            {% endif %}
+        </nav>
+    </header>
+<br>
+    <body>
+        <div>
+            <header class="header">
+                <h1>Welcome to Pawpect!</h1>
+                <p>Your one-stop pet food store</p>
+            </header>
+        </div>
+        <br>
+        <br>
+            <section class="pawpect-info">
+                <h2 style="text-align: center;">About Pawpect</h2>
+                <p>Pawpect is a premier online store dedicated to providing the best pet food and supplies for your
+                    furry friends. Our mission is to ensure your pets have access to high-quality nutrition that
+                    will
+                    keep them healthy and happy.</p>
+                <p>We believe in the well-being of your pets, and that's why we offer a wide variety of premium food
+                    brands, treats, and accessories tailored to meet your pet's specific needs.</p>
+                <p>Whether you're a new pet parent or a seasoned pet lover, Pawpect is here to make shopping for
+                    your
+                    pets easy and enjoyable. Join us today and give your pets the best care they deserve!</p>
+            </section>
+        <br>
+        <br>
+        <footer class="footer">
+            <p>&copy; 2024 Pawpect Store. All rights reserved.</p>
+        </footer>
+
+</div>
+</body>
+
+</html>

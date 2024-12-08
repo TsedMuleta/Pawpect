@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}">
+</head>
+<div class="container">
+    <header>
+        <nav class="nav-bar">
+            <span class="welcome-message">
+                <a href="{% url 'store:home' %}">Home</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'store:store' %}">Store</a>
+                {% endif %}
+            </span>
+            {% if user.is_authenticated %}
+            <span class="welcome-message">
+                Welcome, <strong>{{ user.username }}</strong>!
+                <a href="{% url 'store:logout' %}">Logout</a>
+            </span>
+            {% endif %}
+        </nav>
+    </header>
+
+    <body>
+        <br>
+
+        <header class="header">
+            <h1>Welcome to Pawpect!</h1>
+            <p>Your one-stop pet food store</p>
+        </header>
+
+        <body>
+
+            <!-- Sign Up Form Section -->
+            <div class="sign-up-container">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirm Password</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" required>
+                    </div>
+                    <button type="submit" class="signup-btn">Sign Up</button>
+                </form>
+
+                <!-- Error Message -->
+                <p class="error-message">{{ error }}</p>
+
+                <!-- Login Link -->
+                <p class="sign-up-link">Already have an account? <a href="{% url 'store:login' %}">Login</a></p>
+            </div>
+
+
+            <!-- Footer Section -->
+            <footer class="footer">
+                <p>&copy; 2024 Pawpect Store. All rights reserved.</p>
+            </footer>
+        </body>
+
+</html>

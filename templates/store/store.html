@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawpect Store</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Pawpect Dog Foods</h1>
+            <nav class="nav-bar">
+                <span class="welcome-message"><a href="{% url 'store:home' %}">Home</a>
+                    <a href="{% url 'store:store' %}">Store</a></span>
+                {% if user.is_authenticated %}
+                <span class="welcome-message">Welcome, <strong>{{ user.username }}</strong>!  <a href="{% url 'store:logout' %}">Logout</a></span>
+                {% else %}
+                <span class="welcome-message">  <a href="{% url 'store:login' %}">Login</a>
+                    <a href="{% url 'store:signup' %}">Signup</a></span>
+                {% endif %}
+            </nav>
+        </header>
+
+      
+        <section class="category-filter">
+            <form method="get" class="filter-form">
+                <label for="category">Filter by Category:</label>
+                <select name="category" id="category">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" 
+                            {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Filter</button>
+            </form>
+        </section>
+
+
+        <section class="pet-food-list">
+            <ul>
+                {% for pet_food in pet_food_items %}
+                <li class="pet-food-item">
+      
+                    {% if pet_food.image %}
+                        <img src="{{ pet_food.image.url }}" alt="{{ pet_food.name }}" width="150" height="150">
+                    {% else %}
+                        <img src="{% static 'store/images/placeholders/default_pet_food.png' %}" 
+                             alt="Placeholder Image" width="150" height="150">
+                    {% endif %}
+
+                    <div class="pet-food-info">
+                        <strong>{{ pet_food.name }}</strong> - ${{ pet_food.price }}<br>
+
+                        {% if pet_food.stock == 0 %}
+                            <span class="sold-out">Sold Out</span>
+                        {% else %}
+                            <a href="{% url 'store:place_order' pet_food.id %}" class="order-btn">Place an order</a>
+                        {% endif %}
+
+                        <div class="stock-info">
+                            {% if pet_food.stock > 0 %}
+                                <p>In Stock: {{ pet_food.stock }} units</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        
+        <footer class="footer">
+            <p>&copy; 2024 Pawpect Store. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

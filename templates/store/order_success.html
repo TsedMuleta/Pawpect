@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="center">
+            <h1>Thank you for your order!</h1>
+            <p>Your order has been placed successfully. We appreciate your business!</p>
+
+            <div>
+                <img class="resize-image" src="https://pbs.twimg.com/media/FKGerj3XoAcaotk.jpg" alt="senti">
+            </div>
+            <p>Thank you for ordering from our shop! Rest assured, your purchase is definitely not an scam and in good hands trust.</p>
+            <p>- Senti</p>
+
+            <div class="button-container">
+                <a href="{% url 'store:store' %}" class="order-btn">Go to Store</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

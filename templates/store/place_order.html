@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order {{ pet_food.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <nav class="nav-bar">
+                <span class="welcome-message">
+                    <a href="{% url 'store:home' %}">Home</a>
+                    <a href="{% url 'store:store' %}">Store</a>
+                </span>
+                {% if user.is_authenticated %}
+                    <span class="welcome-message">Welcome, <strong>{{ user.username }}</strong>! 
+                        <a href="{% url 'store:logout' %}">Logout</a>
+                    </span>
+                {% else %}
+                    <span class="welcome-message">
+                        <a href="{% url 'store:login' %}">Login</a>
+                        <a href="{% url 'store:signup' %}">Signup</a>
+                    </span>
+                {% endif %}
+            </nav>
+        </header>
+
+        <main class="order-page">
+            <h1>Order {{ pet_food.name }}</h1>
+            <p class="pet-food-description">{{ pet_food.description }}</p>
+
+            <div class="order-form">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" name="quantity" min="1" max="{{ pet_food.stock }}" required>
+                    </div>
+                    <div class="button-container">
+                        <button type="submit" class="order-btn">Place Order</button>
+                    </div>
+                </form>
+            </div>
+
+            {% if error_message %}
+                <p class="error-message" style="color: red;">{{ error_message }}</p>
+            {% endif %}
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Pawpect Store. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
